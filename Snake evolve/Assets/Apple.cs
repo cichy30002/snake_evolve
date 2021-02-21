@@ -8,6 +8,7 @@ public class Apple : MonoBehaviour
 	public gameManager gameMan;
 	public Snake snake;
 	public GameBoard Board;
+	public ParticleSystem particle;
 
 	public float ThresholdNewSpawnDist = 2f;
 	private Vector2 applePosition;

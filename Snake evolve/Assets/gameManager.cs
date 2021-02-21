@@ -11,7 +11,7 @@ public class gameManager : MonoBehaviour
 	private int points = 0;
 	private void Start()
 	{
-		PointsCounter.text = points.ToString();
+		UpdateCounter();
 	}
 	public void AddPoint()
 	{
@@ -20,6 +20,7 @@ public class gameManager : MonoBehaviour
 	}
 	public void UpdateCounter()
 	{
-		PointsCounter.text = points.ToString();
+		string newCounterText = "Score: " + points.ToString();
+		PointsCounter.text = newCounterText;
 	}
 }

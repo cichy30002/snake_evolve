@@ -30,7 +30,7 @@ public class Snake : MonoBehaviour
 	private float nextInputTime = 0f;
 	private bool growthTime = false;
 	private Quaternion lastRot;
-	
+	private int foodTimer;
 	void Start()
     {
 		transform.position = Vector3.zero;
@@ -126,13 +126,21 @@ public class Snake : MonoBehaviour
 		if (!growthTime)
 		{
 			bodyPositions.RemoveAt(bodyPositions.Count - 1);
+			
+			foodTimer--;
 		}
 		else
 		{
 			growthTime = false;
+			
+			foodTimer = length;
+		}
+        if (foodTimer < 0 && line.positionCount < length)
+        {
 			line.positionCount++;
 		}
-		
+		Debug.Log(foodTimer);
+
 		headPosition += dir;
 		if((int)headPosition.x < 0 || (int)headPosition.y < 0 || (int)headPosition.x == Board.BoardSize || (int)headPosition.y == Board.BoardSize)
 		{
@@ -143,10 +151,11 @@ public class Snake : MonoBehaviour
 			GameOver();
 		}
 		Vector3[] tmpLinePos = new Vector3[line.positionCount];
-		Debug.Log(tmpLinePos.Length);
+		
 		tmpLinePos[0] = Head.position;
 		tmpLinePos[1] = Head.position;
-		tmpLinePos[line.positionCount -1] = bodyTransforms[line.positionCount - 2].position;
+		tmpLinePos[line.positionCount - 1] = new Vector3(bodyTransforms[lastBodyPositions.Count - 1].position.x,
+			bodyTransforms[lastBodyPositions.Count - 1].position.y, 0f);
 		for (int i = 2; i < line.positionCount-1; i++)
 		{
 			tmpLinePos[i] = bodyTransforms[i - 2].position;
@@ -184,6 +193,7 @@ public class Snake : MonoBehaviour
 	{
 		Debug.Log("gameover");
 	}
+	
 	/*
 	public void CorrectDraw()
 	{
